@@ -1,0 +1,132 @@
+<!doctype html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en" ng-app="RSSFeed"> <!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Vodo Feed</title>
+<meta name="description" content="Vodo Feed dummy application">
+<meta name="author" content="Carlos Sosa">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!-- CSS
+================================================================================================= -->
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/themes/type.css">
+<link rel="stylesheet" href="css/themes/color.css">
+
+
+<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<!-- Favicons
+================================================================================================= -->
+<!-- JS
+================================================================================================= -->
+<script src="http://code.angularjs.org/1.0.7/angular.js"></script>
+<script src="js/app.js"></script>
+<script src="js/controller.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/libs/jquery-1.8.3.min.js"></script>
+<script src="js/script.js"></script>
+
+</head>
+<body>
+
+<!-- Write preloader to page - this allows the site to load for users with JS disabled -->
+<script type="text/javascript">
+	document.write("<div id='sitePreloader'><div id='preloaderImage'><img src='images/site_preloader.gif' alt='Preloader' /></div></div>");
+</script>
+
+<div class="container">
+	
+	<!-- Header begins ========================================================================== -->
+	<header class="sixteen columns">
+		<div id="logo">
+			<h1>Vodo Feed</h1>
+		</div>
+		<nav>
+			<ul>
+			</ul>
+		</nav>
+		<hr />
+	</header>
+	<!-- Header ends ============================================================================ -->
+	
+	<!-- Work page begins ======================================================================= -->
+	<div id="work">
+	
+		<div id="overview" class="sixteen columns">
+			<h3>Simple feed reader</h3>
+			<hr />
+		</div>
+		
+		<div class="ten columns" id="col1" ng-controller="FeedCtrl">
+		
+			<!-- Project begins ================================================================= -->
+			<div class="project" ng-repeat="feed in feeds.entry">
+				
+				<div class="projectThumbnail">
+					<svg class="thumbnailMask"></svg>
+					<div class="projectThumbnailHover">
+            <h4>{{feed.title}}</h4>
+						<h5>{{feed.title}}</h5>
+					</div>
+					
+          <a href="{{feed.link[0]['@attributes']['href']}}">
+            <img src="{{feed.thumbnail['@attributes']['url']}}" alt="{{feed.title}}" class="thumbnailImage" />
+          </a>
+				</div>
+				
+				<div class="projectInfo">
+					<h4>{{feed.title}}</h4>
+          <div class="projectNavCounter">
+          </div>
+					<div class="projectNav">
+          Links:
+            <ul ng-repeat="link in feed.link">
+              <li><strong><a href="{{link['@attributes']['href']}}">{{link['@attributes']['rel']|capitalize}}</a>
+            </ul>
+					</div>
+          <ul>
+            <li><strong>License:</strong> {{feed.rights}}</li>
+          </ul>
+          <p ng-show="!feed.content['@attributes']">
+          {{feed.content}}
+					</p>
+					<ul>
+            <li ng-show="feed.format.size > 0"><strong>Size:</strong> {{feed.format.size | bytestosize }}</li>
+            <li ng-show="feed.format.audio_codec[0]"><strong>Audio Codec:</strong> {{feed.format.audio_codec}}</li>
+            <li ng-show="feed.format.video_codec[0]"><strong>Video Codec:</strong> {{feed.format.video_codec}}</li>
+            <li ng-show="feed.format.duration > 0 &&  feed.format.width > 0"><strong>Duration:</strong> {{feed.format.duration | minutes }} 
+            <strong>Dimensions:</strong> {{feed.format.width}}x{{feed.format.height}} ({{feed.format.pixel_aspect_ratio}}) </li>
+            <li><strong>Published:</strong> {{feed.published | cleandate}}</li>
+            <li><strong>Author:</strong> {{feed.author.name}}</li>
+					</ul>
+				</div>
+				
+			</div>
+			<!-- Project ends =================================================================== -->
+			
+		</div><!-- col1 -->
+	
+	</div>
+	
+	<!-- Footer begins ========================================================================== -->
+	<footer class="sixteen columns">
+		<hr />
+		<ul id="footerLinks">
+			<li>&copy; 2013 Carlos Sosa for Bittorrent. All rights reserved.</li>
+			<li><a href="mailto:gnusosa at gnusosa dot net">gnusosa at gnusosa dot net</a></li>
+			<li><a href="http://www.twitter.com/gnusosa" target="_blank">Twitter</a></li>
+			<!--Notice: The "Powered by Type & Grids" link in the footer is required in the Free version. Upgrade to the Pro version if you would like to remove it. (www.typeandgrids.com/pirates) -->
+			<li>Powered by <a href="http://www.typeandgrids.com" target="_blank">Type &amp; Grids</a></li>
+		</ul>
+	</footer>
+	<!-- Footer ends ============================================================================ -->
+		
+</div><!-- container -->
+</body>
+</html>
